@@ -51,6 +51,13 @@
 | 잘못된 요청      | invalid input  | 400 Bad Req  | 400 Bad Req | ✅     |
 | 권한 없음        | no auth        | 401 Unauth   | 500 Error   | ❌     |
 
+## Review Log
+
+<!-- Phase 4 다층 검토 결과를 기록합니다. -->
+
+| 검토 단계 | 관점 | 결과 | 발견된 문제 |
+|-----------|------|------|-------------|
+
 ## Error Log
 
 <!-- 에러 요약 테이블. 상세 내용은 findings.md의 Issues Encountered에 기록합니다.
