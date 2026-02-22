@@ -136,7 +136,7 @@ overview
         self.assertEqual(tasks_ts.minute, 30)
         self.assertEqual(tasks_ts.tzinfo.utcoffset(tasks_ts), timedelta(hours=9))
 
-        spec_content, spec_ts = result["spec.md"]
+        _spec_content, spec_ts = result["spec.md"]
         self.assertIsInstance(spec_ts, datetime)
         self.assertEqual(spec_ts.hour, 16)
         self.assertEqual(spec_ts.minute, 0)

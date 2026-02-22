@@ -508,7 +508,7 @@ def cmd_pull(args):
             synced.append((filename, jira_short))
 
     # 결과 출력
-    print(f"\n[pull] 동기화 결과:")
+    print("\n[pull] 동기화 결과:")
     for name, ts in synced:
         print(f"  ✓ {name:<16} (Jira {ts} → 로컬 갱신)")
     for name in created:
@@ -614,7 +614,7 @@ def cmd_push(args):
                 write_local_timestamp(file_path, now_str)
 
     # 결과 출력
-    print(f"\n[push] 동기화 결과:")
+    print("\n[push] 동기화 결과:")
     for name in synced:
         print(f"  ✓ {name:<16} (로컬 → Jira 갱신)")
     for name in created:
