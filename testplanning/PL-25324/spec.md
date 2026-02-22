@@ -63,7 +63,7 @@ Scenario 2: **Gemini 사용자**
 
 ## Functional Requirements (mandatory)
 
-- FR-1: MUST AGENTS.md에 5-Phase 워크플로우, 3-File Pattern, 11-관점 검토, 핵심 규칙 8가지를 포함
+- FR-1: MUST AGENTS.md에 5-Phase 워크플로우, 6-File Pattern (spec/plan/tasks/findings/progress/README), 11-관점 검토, 핵심 규칙 8가지를 포함
 - FR-2: MUST Claude 전용 표현을 자연어 지시문으로 전환 (Claude 고유 용어 0건)
 - FR-3: MUST CLAUDE.md, GEMINI.md는 AGENTS.md의 symlink으로 생성
 - FR-4: MUST `.planning/{티켓번호}/{하위디렉토리}/` 경로 컨벤션을 정의 (브랜치명 기반)
