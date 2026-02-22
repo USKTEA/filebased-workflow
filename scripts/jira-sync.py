@@ -44,6 +44,11 @@ def parse_timestamp(ts_str):
     return datetime.strptime(ts_str, TIMESTAMP_FORMAT).replace(tzinfo=KST)
 
 
+def format_short_ts(dt):
+    """datetime → '2/22 15:30' (플랫폼 독립적)"""
+    return f"{dt.month}/{dt.day} {dt.strftime('%H:%M')}"
+
+
 def _ensure_requests():
     """requests 라이브러리 설치 여부 확인. 없으면 에러 출력 후 종료."""
     try:
@@ -487,8 +492,8 @@ def cmd_pull(args):
         local_ts = read_local_timestamp(file_path) if file_path.exists() else None
 
         if not force and jira_ts and local_ts and jira_ts < local_ts:
-            jira_short = jira_ts.strftime("%-m/%d %H:%M")
-            local_short = local_ts.strftime("%-m/%d %H:%M")
+            jira_short = format_short_ts(jira_ts)
+            local_short = format_short_ts(local_ts)
             skipped.append((filename, f"로컬이 더 최신 - 로컬 {local_short} > Jira {jira_short}"))
             continue
 
@@ -499,7 +504,7 @@ def cmd_pull(args):
         if is_new:
             created.append(filename)
         else:
-            jira_short = jira_ts.strftime("%-m/%d %H:%M") if jira_ts else "시각 없음"
+            jira_short = format_short_ts(jira_ts) if jira_ts else "시각 없음"
             synced.append((filename, jira_short))
 
     # 결과 출력
@@ -562,8 +567,8 @@ def cmd_push(args):
         jira_ts = jira_files.get(filename, (None, None))[1] if filename in jira_files else None
 
         if not force and local_ts and jira_ts and local_ts < jira_ts:
-            local_short = local_ts.strftime("%-m/%d %H:%M")
-            jira_short = jira_ts.strftime("%-m/%d %H:%M")
+            local_short = format_short_ts(local_ts)
+            jira_short = format_short_ts(jira_ts)
             skipped.append((filename, f"Jira가 더 최신 - Jira {jira_short} > 로컬 {local_short}"))
             continue
 
