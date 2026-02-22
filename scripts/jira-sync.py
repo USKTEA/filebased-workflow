@@ -475,8 +475,8 @@ def cmd_pull(args):
         print("planning 영역은 존재하지만 파일 데이터가 없습니다.")
         sys.exit(0)
 
-    # 저장 디렉토리 결정
-    target_dir = Path(".planning") / ticket
+    # 저장 디렉토리 결정 (push와 동일한 경로 사용)
+    target_dir = find_planning_dir(ticket)
     target_dir.mkdir(parents=True, exist_ok=True)
 
     now_str = get_kst_now()
