@@ -1,0 +1,21 @@
+language: ko
+
+reviews:
+  auto_review:
+    enabled: true
+  path_instructions:
+    - path: "**/*"
+      instructions: |
+        PR 제목에서 티켓번호(예: PL-25324)를 추출하고,
+        `testplanning/{티켓번호}/` 디렉토리의 planning 파일들을 읽고 리뷰에 반영하세요.
+
+        참조할 파일:
+        - spec.md: 요구사항 명세
+        - plan.md: 구현 계획
+        - tasks.md: 작업 추적
+        - findings.md: 기술적 결정 사항
+
+        리뷰 기준:
+        - spec.md의 Functional Requirements와 Success Criteria를 충족하는지
+        - plan.md의 Implementation Steps와 일치하는 구현인지
+        - 불필요한 변경이나 스코프 외 작업이 포함되지 않았는지
