@@ -588,9 +588,9 @@ def cmd_push(args):
     if missing:
         print(f"참고: 다음 파일이 없어 제외됩니다: {', '.join(missing)}")
 
-    # 스킵되지 않은 기존 Jira 파일도 유지 (push 대상이 아닌 파일은 기존 값 보존)
+    # files_content에 없는 기존 Jira 파일 보존 (스킵된 파일 포함)
     for filename, (content, ts) in jira_files.items():
-        if filename not in files_content and filename not in [s[0] for s in skipped]:
+        if filename not in files_content:
             ts_str = ts.strftime(TIMESTAMP_FORMAT) if ts else None
             files_content[filename] = (content, ts_str)
 
