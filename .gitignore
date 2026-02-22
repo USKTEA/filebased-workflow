@@ -1,0 +1,42 @@
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Editor backup files
+*.swp
+*.swo
+*.bak
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment and local config
+.env
+.env.local
+*.local
+
+# Build and distribution
+dist/
+build/
+
+.omc
+.claude
