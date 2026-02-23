@@ -16,16 +16,35 @@ reviews:
         `=== FILE: spec.md ===`, `=== FILE: plan.md ===` 등의 마커로 구분된 섹션을 참조하세요.
 
         각 섹션의 역할:
-        - spec.md: 요구사항 명세 (Functional Requirements, Success Criteria)
+        - spec.md: 요구사항 명세 (FR, CON, SC, Acceptance Scenarios)
         - plan.md: 구현 계획 (파일 구조, Implementation Steps)
         - tasks.md: 작업 추적 및 의사결정 기록
         - findings.md: 기술적 발견사항 및 결정
 
-        리뷰 기준:
-        - spec.md의 Functional Requirements(FR-*)를 코드가 충족하는지 검증
-        - plan.md의 파일 구조 및 Implementation Steps와 실제 구현이 일치하는지 검증
-        - spec.md에 명시된 기능이 코드에서 누락되지 않았는지 검증
-        - 불필요한 변경이나 스코프 외 작업이 포함되지 않았는지 검증
+        리뷰 시 spec.md의 모든 항목을 개별 검증하세요:
+
+        1. Functional Requirements (FR-*):
+           - 각 FR이 코드에 구현되어 있는지 개별 확인
+           - 누락된 FR이 있으면 명시적으로 지적
+
+        2. Constraints (CON-*):
+           - 언어, 빌드 도구, 외부 의존성 등 제약조건 위반 여부 확인
+           - 제약조건을 벗어나는 코드가 있으면 지적
+
+        3. Success Criteria (SC-*):
+           - 각 SC가 코드로 달성 가능한지 확인
+           - 달성 불가능한 SC가 있으면 지적
+
+        4. Acceptance Scenarios (Given-When-Then):
+           - 각 시나리오의 흐름이 코드에서 정상 동작하는지 검증
+           - 시나리오를 만족하지 못하는 코드 경로가 있으면 지적
+
+        5. plan.md 일치성:
+           - 파일 구조가 plan.md와 일치하는지 확인
+           - Implementation Steps와 실제 구현이 일치하는지 확인
+
+        6. 스코프 검증:
+           - 불필요한 변경이나 스코프 외 작업이 포함되지 않았는지 확인
 
 chat:
   integrations:
