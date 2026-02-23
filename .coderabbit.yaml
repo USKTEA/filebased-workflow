@@ -1,21 +1,33 @@
 language: ko
 
+knowledge_base:
+  jira:
+    usage: "enabled"
+    project_keys:
+      - "PL"
+
 reviews:
   auto_review:
     enabled: true
   path_instructions:
     - path: "**/*"
       instructions: |
-        PR 제목에서 티켓번호(예: PL-25324)를 추출하고,
-        `testplanning/{티켓번호}/` 디렉토리의 planning 파일들을 읽고 리뷰에 반영하세요.
+        이 PR에 연결된 Jira 티켓의 description에 planning 컨텍스트가 포함되어 있습니다.
+        `=== FILE: spec.md ===`, `=== FILE: plan.md ===` 등의 마커로 구분된 섹션을 참조하세요.
 
-        참조할 파일:
-        - spec.md: 요구사항 명세
-        - plan.md: 구현 계획
-        - tasks.md: 작업 추적
-        - findings.md: 기술적 결정 사항
+        각 섹션의 역할:
+        - spec.md: 요구사항 명세 (Functional Requirements, Success Criteria)
+        - plan.md: 구현 계획 (파일 구조, Implementation Steps)
+        - tasks.md: 작업 추적 및 의사결정 기록
+        - findings.md: 기술적 발견사항 및 결정
 
         리뷰 기준:
-        - spec.md의 Functional Requirements와 Success Criteria를 충족하는지
-        - plan.md의 Implementation Steps와 일치하는 구현인지
-        - 불필요한 변경이나 스코프 외 작업이 포함되지 않았는지
+        - spec.md의 Functional Requirements(FR-*)를 코드가 충족하는지 검증
+        - plan.md의 파일 구조 및 Implementation Steps와 실제 구현이 일치하는지 검증
+        - spec.md에 명시된 기능이 코드에서 누락되지 않았는지 검증
+        - 불필요한 변경이나 스코프 외 작업이 포함되지 않았는지 검증
+
+chat:
+  integrations:
+    jira:
+      usage: "enabled"
