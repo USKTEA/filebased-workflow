@@ -128,13 +128,76 @@ copy AGENTS.md GEMINI.md
 
 상세 내용은 [AGENTS.md](AGENTS.md)를 참조하세요.
 
+```mermaid
+flowchart TD
+    Start(["PL-12345 작업 시작"])
+
+    Start --> Pull["jira-sync.py pull
+    Jira에서 Planning Files 복원"]
+    Pull --> HasFiles{기존 planning
+    파일 존재?}
+    HasFiles -->|Yes| Resume["세션 복구
+    tasks.md로 현재 Phase 확인"]
+    HasFiles -->|No| Phase1
+
+    subgraph plan ["Phase 1: 계획 수립 및 검증"]
+        Phase1["계획 수립
+        코드베이스 탐색 + 사용자 인터뷰"]
+        Phase1 --> Review1["계획 검토 → 메타 검증 → 과도함 검토"]
+        Review1 --> Approve{사용자 승인}
+        Approve -->|수정| Phase1
+    end
+
+    Resume --> Phase3
+    Approve -->|승인| Phase2
+
+    subgraph files ["Phase 2: Planning Files 생성"]
+        Phase2[".planning/PL-12345/ 하위에 자동 생성
+        spec.md, plan.md, tasks.md,
+        findings.md, progress.md, README.md"]
+    end
+
+    Phase2 --> Phase3
+
+    subgraph impl ["Phase 3: 구현"]
+        Phase3["tasks.md 읽기 → 코드 수정 → tasks.md 업데이트
+        에러 발생 시 findings.md에 즉시 기록"]
+    end
+
+    Phase3 --> Phase4
+
+    subgraph review ["Phase 4: 다층 검토 (11개 관점)"]
+        Phase4["목적 부합 → 버그/보안 → 사이드 이펙트
+        → 코드 품질 → 전체 diff → 연쇄 검토 ..."]
+    end
+
+    Phase4 --> Phase5
+
+    subgraph deploy ["Phase 5: 최종 게이트 및 배포"]
+        Phase5["배포 준비도 평가"]
+        Phase5 --> Push["jira-sync.py push
+        Planning Files → Jira 동기화"]
+        Push --> PR["커밋 & PR 생성"]
+    end
+
+    PR --> CodeRabbit
+
+    subgraph cr ["CodeRabbit 자동 리뷰"]
+        CodeRabbit["PR에 연결된 Jira 티켓 감지"]
+        CodeRabbit --> Fetch["Jira description에서
+        planning 컨텍스트 자동 참조"]
+        Fetch --> Pinpoint["spec.md 기준 pinpoint 코드리뷰
+        FR · CON · SC · Scenarios 개별 검증"]
+    end
+```
+
 | Phase | 단계명 | 설명 |
 |-------|--------|------|
 | Phase 1 | 계획 수립 및 검증 | 계획 수립 → 계획 검토 → 메타 검증 → 과도함 검토 |
 | Phase 2 | Planning Files 생성 | spec.md, plan.md, tasks.md, findings.md, progress.md, README.md 자동 생성 |
 | Phase 3 | 구현 | 파일 수정, 에러 기록, 테스트 작성 및 실행 |
 | Phase 4 | 다층 검토 | 11개 관점(목적 부합, 보안, 사이드 이펙트 등)으로 순차 검토 |
-| Phase 5 | 최종 게이트 및 배포 | 배포 준비도 평가, 커밋, PR 작성 |
+| Phase 5 | 최종 게이트 및 배포 | 배포 준비도 평가, Jira push, 커밋, PR 작성 → CodeRabbit 자동 리뷰 |
 
 ---
 
