@@ -19,7 +19,8 @@
       "Bash(gh pr:*)",
       "Bash(gh api:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:developers.openai.com)"
+      "WebFetch(domain:developers.openai.com)",
+      "Bash(git checkout:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

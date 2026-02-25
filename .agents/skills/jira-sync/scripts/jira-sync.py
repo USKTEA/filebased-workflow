@@ -3,11 +3,11 @@
 Jira 동기화 스크립트 - planning 파일과 Jira 티켓 description을 양방향 동기화
 
 사용법:
-    python scripts/jira-sync.py setup          # 최초 설정 (.env 파일 생성)
-    python scripts/jira-sync.py pull PL-25324   # Jira → 로컬
-    python scripts/jira-sync.py push PL-25324   # 로컬 → Jira
-    python scripts/jira-sync.py pull PL-25324 --force  # 강제 pull (충돌 무시)
-    python scripts/jira-sync.py push PL-25324 --force  # 강제 push (충돌 무시)
+    python .agents/skills/jira-sync/scripts/jira-sync.py setup          # 최초 설정 (.env 파일 생성)
+    python .agents/skills/jira-sync/scripts/jira-sync.py pull PL-25324   # Jira → 로컬
+    python .agents/skills/jira-sync/scripts/jira-sync.py push PL-25324   # 로컬 → Jira
+    python .agents/skills/jira-sync/scripts/jira-sync.py pull PL-25324 --force  # 강제 pull (충돌 무시)
+    python .agents/skills/jira-sync/scripts/jira-sync.py push PL-25324 --force  # 강제 push (충돌 무시)
 
 환경 변수 (.env 파일 또는 export):
     JIRA_BASE_URL    Atlassian Cloud 도메인 (예: https://your-domain.atlassian.net)
@@ -73,7 +73,7 @@ def _ensure_requests():
         import requests  # noqa: F401
     except ImportError:
         print("오류: 'requests' 라이브러리가 설치되지 않았습니다.")
-        print("설치 방법: pip3 install -r scripts/requirements.txt")
+        print("설치 방법: pip3 install -r .agents/skills/jira-sync/scripts/requirements.txt")
         sys.exit(1)
 
 
@@ -257,7 +257,7 @@ def get_env_vars():
         for var in missing:
             print(f"  - {var}")
         print("\n설정 방법:")
-        print("  1. python3 scripts/jira-sync.py setup  (대화형 설정)")
+        print("  1. python3 .agents/skills/jira-sync/scripts/jira-sync.py setup  (대화형 설정)")
         print("  2. 직접 환경 변수 export")
         sys.exit(1)
 
@@ -550,7 +550,7 @@ def cmd_pull(args):
         print(f"  - {name:<16} (스킵: {reason})")
 
     if skipped:
-        print(f"\n강제 동기화: python3 scripts/jira-sync.py pull {ticket} --force")
+        print(f"\n강제 동기화: python3 .agents/skills/jira-sync/scripts/jira-sync.py pull {ticket} --force")
 
     print("\npull 완료.")
 
@@ -656,7 +656,7 @@ def cmd_push(args):
         print(f"  - {name:<16} (스킵: {reason})")
 
     if skipped:
-        print(f"\n강제 동기화: python3 scripts/jira-sync.py push {ticket} --force")
+        print(f"\n강제 동기화: python3 .agents/skills/jira-sync/scripts/jira-sync.py push {ticket} --force")
 
     print(f"\n티켓 '{ticket}' description 업데이트 완료.")
 
@@ -712,9 +712,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 예시:
-  python3 scripts/jira-sync.py setup           # 최초 설정
-  python3 scripts/jira-sync.py pull PL-25324   # Jira → 로컬
-  python3 scripts/jira-sync.py push PL-25324   # 로컬 → Jira
+  python3 .agents/skills/jira-sync/scripts/jira-sync.py setup           # 최초 설정
+  python3 .agents/skills/jira-sync/scripts/jira-sync.py pull PL-25324   # Jira → 로컬
+  python3 .agents/skills/jira-sync/scripts/jira-sync.py push PL-25324   # 로컬 → Jira
 
 환경 변수 (.env 파일 또는 export):
   JIRA_BASE_URL    Atlassian Cloud 도메인 (예: https://your-domain.atlassian.net)

@@ -25,7 +25,7 @@ After Phase 1 plan is approved, create 6 planning files under `.planning/{ticket
 
 ## Templates
 
-Use the templates from `templates/` directory in the project root. Each template provides the standard structure. Below is a summary of key sections per file:
+Use the templates from the `templates/` directory co-located with this skill (`.agents/skills/phase-2-files/templates/`). Each template provides the standard structure. Below is a summary of key sections per file:
 
 ### spec.md
 - Overview, User Scenarios & Testing (mandatory), Functional Requirements (FR-N: MUST/SHOULD), Constraints (CON-N), Success Criteria (SC-N)

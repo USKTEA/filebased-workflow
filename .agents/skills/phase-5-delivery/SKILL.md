@@ -23,13 +23,13 @@ A final judgment synthesizing all reviews. Even if individual reviews pass, the 
 Before committing, sync local planning files to Jira:
 
 ```bash
-python3 scripts/jira-sync.py push {ticket-number}
+python3 .agents/skills/jira-sync/scripts/jira-sync.py push {ticket-number}
 ```
 <!-- SYNC: jira-sync push procedure -->
 
 If the script fails or Jira has newer content, use `--force` to overwrite:
 ```bash
-python3 scripts/jira-sync.py push {ticket-number} --force
+python3 .agents/skills/jira-sync/scripts/jira-sync.py push {ticket-number} --force
 ```
 
 ## Commit Convention

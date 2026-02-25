@@ -19,17 +19,17 @@ description: >
 python3 --version
 
 # 2. Verify requests library
-python3 -c "import requests" 2>/dev/null || pip3 install -r scripts/requirements.txt
+python3 -c "import requests" 2>/dev/null || pip3 install -r .agents/skills/jira-sync/scripts/requirements.txt
 ```
 
 - If Python 3 is missing: inform user and stop
-- If `requests` is missing: attempt `pip3 install -r scripts/requirements.txt`
+- If `requests` is missing: attempt `pip3 install -r .agents/skills/jira-sync/scripts/requirements.txt`
 - If `pip3` fails: inform user of manual installation and stop
 
 ## Setup (first time)
 
 ```bash
-python3 scripts/jira-sync.py setup
+python3 .agents/skills/jira-sync/scripts/jira-sync.py setup
 ```
 
 Or set environment variables directly:
@@ -50,12 +50,12 @@ When receiving `{ticket} 작업 시작` prompt:
 1. Run dependency check (once per session)
 2. Execute pull:
    ```bash
-   python3 scripts/jira-sync.py pull {ticket-number}
+   python3 .agents/skills/jira-sync/scripts/jira-sync.py pull {ticket-number}
    ```
 3. Script handles: Jira API auth, data parsing, file creation in `.planning/{ticket}/{branch}/`
 4. **Conflict detection**: Compares timestamps per file. Skips if local is newer. Use `--force` to overwrite:
    ```bash
-   python3 scripts/jira-sync.py pull {ticket-number} --force
+   python3 .agents/skills/jira-sync/scripts/jira-sync.py pull {ticket-number} --force
    ```
 5. After script completes, read only the generated local files and start work
 6. If script fails (ticket not found, auth error, missing deps): show warning and stop
@@ -66,12 +66,12 @@ Before committing:
 
 1. Execute push:
    ```bash
-   python3 scripts/jira-sync.py push {ticket-number}
+   python3 .agents/skills/jira-sync/scripts/jira-sync.py push {ticket-number}
    ```
    <!-- SYNC: jira-sync push procedure -->
 2. **Conflict detection**: Compares timestamps per file. Skips if Jira is newer. Use `--force` to overwrite:
    ```bash
-   python3 scripts/jira-sync.py push {ticket-number} --force
+   python3 .agents/skills/jira-sync/scripts/jira-sync.py push {ticket-number} --force
    ```
 3. Script safely preserves existing Jira description while idempotently updating `PLANNING_START`~`PLANNING_END` region only
 4. The agent MUST NOT directly compose text to overwrite Jira description

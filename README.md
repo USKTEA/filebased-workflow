@@ -79,7 +79,7 @@ PL-12345 작업 시작
 AGENTS.md                          ← 공통 워크플로우 (Single Source of Truth)
 CLAUDE.md  → AGENTS.md (symlink)   ← Claude Code 자동 로딩
 GEMINI.md  → AGENTS.md (symlink)   ← Gemini CLI 자동 로딩
-templates/                         ← planning 파일 템플릿
+.agents/skills/phase-2-files/templates/  ← planning 파일 템플릿
   spec.md
   plan.md
   tasks.md
@@ -243,16 +243,16 @@ PL-12345 Phase 4 재개   # 검토 단계부터 다시 시작할 때
 
 ## Jira 티켓 연동
 
-> **에이전트는 Jira에 직접 접근하지 않습니다.** 반드시 `scripts/jira-sync.py` 스크립트를 통해 통신합니다.
+> **에이전트는 Jira에 직접 접근하지 않습니다.** 반드시 `.agents/skills/jira-sync/scripts/jira-sync.py` 스크립트를 통해 통신합니다.
 
 ### 사전 설정
 
 ```bash
 # 1. 의존성 설치
-pip3 install -r scripts/requirements.txt
+pip3 install -r .agents/skills/jira-sync/scripts/requirements.txt
 
 # 2. 대화형 설정 (권장 - .env 파일에 자동 저장)
-python3 scripts/jira-sync.py setup
+python3 .agents/skills/jira-sync/scripts/jira-sync.py setup
 
 # 또는 직접 환경 변수 설정
 export JIRA_BASE_URL="https://your-domain.atlassian.net"
@@ -269,8 +269,8 @@ export JIRA_API_TOKEN="your-api-token"
 ### 작업 시작 시 (Pull)
 
 ```bash
-python3 scripts/jira-sync.py pull PL-12345
-python3 scripts/jira-sync.py pull PL-12345 --force  # 충돌 무시하고 강제 pull
+python3 .agents/skills/jira-sync/scripts/jira-sync.py pull PL-12345
+python3 .agents/skills/jira-sync/scripts/jira-sync.py pull PL-12345 --force  # 충돌 무시하고 강제 pull
 ```
 
 Jira description의 `PLANNING_START`~`PLANNING_END` 영역을 파싱하여 로컬 `.planning/{티켓번호}/` 디렉토리에 파일로 복원합니다. 각 파일별로 타임스탬프를 비교하여 로컬이 더 최신이면 스킵합니다. 티켓이 없으면 경고 후 중단합니다.
@@ -278,8 +278,8 @@ Jira description의 `PLANNING_START`~`PLANNING_END` 영역을 파싱하여 로�
 ### 커밋 전 (Push)
 
 ```bash
-python3 scripts/jira-sync.py push PL-12345
-python3 scripts/jira-sync.py push PL-12345 --force  # 충돌 무시하고 강제 push
+python3 .agents/skills/jira-sync/scripts/jira-sync.py push PL-12345
+python3 .agents/skills/jira-sync/scripts/jira-sync.py push PL-12345 --force  # 충돌 무시하고 강제 push
 ```
 
 로컬 planning 파일을 Jira description에 동기화합니다. 각 파일별로 타임스탬프를 비교하여 Jira가 더 최신이면 스킵합니다. 기존 description은 보존되며, planning 영역만 멱등성 있게 갱신됩니다.
@@ -296,7 +296,7 @@ python3 scripts/jira-sync.py push PL-12345 --force  # 충돌 무시하고 강제
 
 ```
 AGENTS.md                    ← 공통 워크플로우 (SSoT)
-templates/
+.agents/skills/phase-2-files/templates/
   spec.md                   ← 요구사항 명세 템플릿
   plan.md                   ← 구현 계획 템플릿
   tasks.md                  ← 작업 추적 템플릿
@@ -324,8 +324,8 @@ echo ".planning/" >> .gitignore
 echo ".env" >> .gitignore
 
 # 3. (선택) Jira 연동 설정
-pip3 install -r scripts/requirements.txt
-python3 scripts/jira-sync.py setup
+pip3 install -r .agents/skills/jira-sync/scripts/requirements.txt
+python3 .agents/skills/jira-sync/scripts/jira-sync.py setup
 ```
 
 ### 옮기지 않아도 되는 것들
@@ -348,4 +348,4 @@ python3 scripts/jira-sync.py setup
 - [spec-driven-development.md](spec-driven-development.md) - Spec 주도 개발 방법론
 - [file-based-workflow.md](file-based-workflow.md) - 파일 기반 워크플로우 심화
 - [planning-with-files.md](planning-with-files.md) - Planning 파일 활용 가이드
-- [templates/](templates/) - planning 파일 템플릿 모음
+- [templates/](.agents/skills/phase-2-files/templates/) - planning 파일 템플릿 모음
