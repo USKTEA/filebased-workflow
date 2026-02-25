@@ -20,13 +20,14 @@ Jira 동기화 스크립트 - planning 파일과 Jira 티켓 description을 양�
 Auto-Routing:
     JIRA_BASE_URL에서 cloudId를 자동 취득하여 API Gateway(api.atlassian.com)를 사용합니다.
 
-pull: Jira description의 PLANNING 영역 -> .planning/{티켓번호}/ 디렉토리에 파일 저장
-push: .planning/{티켓번호}/ 디렉토리의 파일 -> Jira description의 PLANNING 영역에 업데이트
+pull: Jira description의 PLANNING 영역 -> .planning/{티켓번호}/{브랜치이름}/ 디렉토리에 파일 저장
+push: .planning/{티켓번호}/{브랜치이름}/ 디렉토리의 파일 -> Jira description의 PLANNING 영역에 업데이트
 """
 
 import argparse
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -47,6 +48,23 @@ def parse_timestamp(ts_str):
 def format_short_ts(dt):
     """datetime → '2/22 15:30' (플랫폼 독립적)"""
     return f"{dt.month}/{dt.day} {dt.strftime('%H:%M')}"
+
+
+def get_current_branch():
+    """현재 git 브랜치 이름을 반환. git 저장소가 아니거나 실패하면 None 반환."""
+    try:
+        result = subprocess.run(
+            ["git", "branch", "--show-current"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if result.returncode == 0:
+            branch = result.stdout.strip()
+            return branch if branch else None
+        return None
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        return None
 
 
 def _ensure_requests():
@@ -436,14 +454,29 @@ def update_issue_description(cloud_id, auth_kwargs, ticket, new_description):
 
 def find_planning_dir(ticket):
     """
-    .planning/{ticket}/ 하위 디렉토리 탐색.
-    하위 디렉토리가 있으면 그 안을 대상으로, 없으면 바로 해당 디렉토리를 반환.
+    .planning/{ticket}/{브랜치이름}/ 경로를 반환.
+    현재 git 브랜치 이름을 하위 디렉토리로 사용한다.
+    git 브랜치를 감지할 수 없는 경우 기존 동작으로 폴백:
+      - 하위 디렉토리가 있으면 알파벳 첫 번째 사용
+      - 없으면 base_dir 자체를 반환
     """
     base_dir = Path(".planning") / ticket
+
+    # 1차: git 브랜치 기반 경로
+    branch = get_current_branch()
+    if branch:
+        # 브랜치명에서 티켓번호 prefix 제거 (예: PL-25324/skills → skills)
+        prefix = f"{ticket}/"
+        if branch.startswith(prefix):
+            subdir = branch[len(prefix):]
+        else:
+            subdir = branch
+        return base_dir / subdir
+
+    # 폴백: 기존 동작 (git 저장소가 아닌 경우 등)
     if not base_dir.exists():
         return base_dir  # 없어도 base_dir 반환 (push 시 파일 없음 처리)
 
-    # 하위 디렉토리 확인
     subdirs = [d for d in base_dir.iterdir() if d.is_dir()]
     if subdirs:
         # 하위 디렉토리가 여러 개면 첫 번째 사용 (알파벳 정렬)
