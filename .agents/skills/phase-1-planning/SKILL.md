@@ -16,7 +16,7 @@ Use your planning tools to start a planning interview:
 - Explore the codebase and analyze architecture
 - Confirm requirements, constraints, and technical decisions through user interview
 - Document the execution plan
-- **After plan completion and user approval, automatically transition to Phase 2 (Planning Files generation)**
+- **After plan completion, present results to user and await approval (see AGENTS.md Phase Gate Rule)**
 
 ## Step 2: Plan Review
 
@@ -38,4 +38,4 @@ Review whether the plan is excessive:
 - Any YAGNI (You Aren't Gonna Need It) violations?
 - Checking "is this over-engineered?" at planning stage is more cost-effective than "simplify this" after implementation
 
-After the final execution plan is approved, proceed to Phase 2.
+After all 4 steps are complete, present the final results to the user and await approval before proceeding.

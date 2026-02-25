@@ -9,7 +9,7 @@ description: >
 
 # Phase 2: Generate Planning Files
 
-After Phase 1 plan is approved, **automatically** create 6 planning files under `.planning/{ticket}/{branch}/`.
+After Phase 1 plan is approved, create 6 planning files under `.planning/{ticket}/{branch}/`.
 
 ## File Structure
 
@@ -47,4 +47,4 @@ Use the templates from `templates/` directory in the project root. Each template
 
 ## After Creation
 
-Verify all 6 files exist, then proceed to Phase 3 (Implementation).
+Verify all 6 files exist, then present results to the user and await approval before proceeding (see AGENTS.md Phase Gate Rule).
