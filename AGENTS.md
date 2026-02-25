@@ -58,6 +58,14 @@ ATTEMPT 3: Full reconsider — question assumptions, search for solutions, consi
 After 3 failures: Escalate to user
 ```
 
+### 9. Phase Gate Rule
+At the end of each Phase, you MUST:
+1. Present a summary of results to the user
+2. Wait for user feedback
+3. Proceed to the next Phase only after user approval
+
+Never auto-transition to the next Phase without explicit user approval.
+
 ## Planning Files
 
 Location: `.planning/{ticket-number}/{branch-name}/`
