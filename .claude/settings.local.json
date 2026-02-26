@@ -20,7 +20,13 @@
       "Bash(gh api:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:developers.openai.com)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(pip3 install:*)",
+      "Bash(set -a && source /Users/suktae/work/personal/filebased-workflow/.env && set +a && python3 .agents/skills/jira-sync/scripts/jira-sync.py push PL-25454 2>&1)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:dal-lab.com)",
+      "WebFetch(domain:wild-coding.com)"
     ]
   },
   "enableAllProjectMcpServers": true,

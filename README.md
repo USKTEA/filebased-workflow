@@ -85,7 +85,7 @@ GEMINI.md  → AGENTS.md (symlink)   ← Gemini CLI 자동 로딩
   tasks.md
   findings.md
   progress.md
-scripts/                           ← 자동화 스크립트
+.agents/skills/jira-sync/scripts/  ← 자동화 스크립트
   jira-sync.py                     ← Jira 티켓 양방향 동기화
 .planning/                         ← 작업별 planning 파일 (자동 생성)
   {티켓번호}/{하위디렉토리}/
@@ -307,7 +307,7 @@ AGENTS.md                    ← 공통 워크플로우 (SSoT)
 ### 선택 파일 (Jira 연동 시)
 
 ```
-scripts/
+.agents/skills/jira-sync/scripts/
   jira-sync.py              ← Jira 양방향 동기화
   requirements.txt          ← Python 의존성 (requests)
 ```
@@ -335,7 +335,7 @@ python3 .agents/skills/jira-sync/scripts/jira-sync.py setup
 | `.planning/` | 프로젝트별 planning 데이터 (자동 생성) |
 | `README.md` | 이 워크플로우 레포 자체의 설명서 |
 | `records/` | 과거 이력 |
-| `scripts/test_jira_sync.py` | 스크립트 테스트 코드 |
+| `.agents/skills/jira-sync/scripts/test_jira_sync.py` | 스크립트 테스트 코드 |
 | 참고 문서 (`*-development.md` 등) | 방법론 심화 문서 |
 
 복사 후 AI 에이전트에게 `{티켓번호} 작업 시작`이라고 말하면 바로 사용할 수 있습니다.
