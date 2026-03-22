@@ -1,36 +1,52 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ln:*)",
-      "WebFetch(domain:support.atlassian.com)",
       "WebSearch",
-      "WebFetch(domain:developer.atlassian.com)",
-      "WebFetch(domain:community.atlassian.com)",
-      "WebFetch(domain:dac-static.atlassian.com)",
-      "WebFetch(domain:community.developer.atlassian.com)",
-      "WebFetch(domain:api.apis.guru)",
-      "Bash(head:*)",
-      "Bash(curl -s \"https://dac-static.atlassian.com/cloud/jira/platform/swagger-v3.v3.json\" 2>/dev/null | python3 -c \"\nimport json, sys\ndata = json.load\\(sys.stdin\\)\npaths = data.get\\('paths', {}\\)\nissue_path = paths.get\\('/rest/api/3/issue/{issueIdOrKey}', {}\\)\nfor method in ['get', 'put']:\n    op = issue_path.get\\(method, {}\\)\n    print\\(f'=== {method.upper\\(\\)} /rest/api/3/issue/{{issueIdOrKey}} ==='\\)\n    # Print full operation minus requestBody and responses for brevity\n    slim = {k: v for k, v in op.items\\(\\) if k not in \\('requestBody', 'responses', 'parameters'\\)}\n    print\\(json.dumps\\(slim, indent=2\\)\\)\n    print\\(\\)\n\" 2>&1)",
-      "Bash(curl -s \"https://dac-static.atlassian.com/cloud/jira/platform/swagger-v3.v3.json\" 2>/dev/null | python3 -c \"\nimport json, sys\ndata = json.load\\(sys.stdin\\)\n\n# 1. Search for read:issue-details:jira anywhere in the spec\nspec_str = json.dumps\\(data\\)\nif 'read:issue-details:jira' in spec_str:\n    print\\('read:issue-details:jira FOUND in spec'\\)\n    # Find which endpoints use it\n    for path, path_item in data.get\\('paths', {}\\).items\\(\\):\n        for method, op in path_item.items\\(\\):\n            if not isinstance\\(op, dict\\):\n                continue\n            for scope_block in op.get\\('x-atlassian-oauth2-scopes', []\\):\n                if 'read:issue-details:jira' in scope_block.get\\('scopes', []\\):\n                    print\\(f'  -> {method.upper\\(\\)} {path} \\(state: {scope_block[\\\\\"state\\\\\"]}\\)'\\)\nelse:\n    print\\('read:issue-details:jira NOT FOUND anywhere in spec'\\)\n\nprint\\(\\)\n\n# 2. Search for _edge/tenant_info\nif '_edge/tenant_info' in spec_str or 'tenant_info' in spec_str:\n    print\\('tenant_info endpoint FOUND in spec'\\)\n    for path in data.get\\('paths', {}\\):\n        if 'tenant' in path.lower\\(\\):\n            print\\(f'  path: {path}'\\)\nelse:\n    print\\('_edge/tenant_info NOT FOUND in spec \\(unauthenticated endpoint, not in Jira REST spec\\)'\\)\n\nprint\\(\\)\n\n# 3. Show all scopes used in GET /rest/api/3/issue/{issueIdOrKey} Beta block\nissue_path = data['paths'].get\\('/rest/api/3/issue/{issueIdOrKey}', {}\\)\nget_op = issue_path.get\\('get', {}\\)\nprint\\('=== GET issue - all x-atlassian-oauth2-scopes blocks ==='\\)\nfor block in get_op.get\\('x-atlassian-oauth2-scopes', []\\):\n    print\\(f'  state={block[\\\\\"state\\\\\"]}: {block[\\\\\"scopes\\\\\"]}'\\)\n\nprint\\(\\)\nput_op = issue_path.get\\('put', {}\\)\nprint\\('=== PUT issue - all x-atlassian-oauth2-scopes blocks ==='\\)\nfor block in put_op.get\\('x-atlassian-oauth2-scopes', []\\):\n    print\\(f'  state={block[\\\\\"state\\\\\"]}: {block[\\\\\"scopes\\\\\"]}'\\)\n\" 2>&1)",
-      "Bash(python3:*)",
-      "WebFetch(domain:docs.coderabbit.ai)",
-      "Bash(git push:*)",
-      "Bash(ls:*)",
-      "Bash(gh pr:*)",
-      "Bash(gh api:*)",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:developers.openai.com)",
-      "Bash(git checkout:*)",
-      "Bash(pip3 install:*)",
-      "Bash(set -a && source /Users/suktae/work/personal/filebased-workflow/.env && set +a && python3 .agents/skills/jira-sync/scripts/jira-sync.py push PL-25454 2>&1)",
+      "Bash(git:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "WebFetch(domain:dal-lab.com)",
-      "WebFetch(domain:wild-coding.com)"
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh api:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__obsidian__read-note",
+      "mcp__obsidian__create-note",
+      "Bash(bash .claude/hooks/phase-guard.sh)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(bash .claude/hooks/completion-check.sh)",
+      "Bash(echo \"completion-check: $?\")"
     ]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "context7"
-  ]
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/phase-guard.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/completion-check.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
