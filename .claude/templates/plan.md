@@ -19,15 +19,15 @@
 
 ### New Files
 
-- `path/to/NewFile.kt`
+- `path/to/NewFile`
 
 ### Modified Files
 
-- `path/to/ExistingFile.kt`
+- `path/to/ExistingFile`
 
 ### Reference Files
 
-- `path/to/ReferenceFile.kt`
+- `path/to/ReferenceFile`
 
 ## Architecture
 
@@ -66,71 +66,32 @@ Entity (기존)
 
 ## Implementation Steps
 
-<!-- Outside-In TDD 방식으로 구현 단계를 작성합니다. -->
-<!-- 각 단계마다 Red-Green-Refactoring 사이클을 반복합니다. -->
+<!-- 구현 단계를 Outside-In 순서로 작성합니다. -->
 
-### Step 1: UI Layer - Controller
+### Step 1: UI Layer
 
-**Red:** `src/test/kotlin/...ControllerTest.kt`
+설명
 
-```kotlin
-// 실패하는 테스트
-```
+### Step 2: Application Layer
 
-**Green:** `src/main/kotlin/...Controller.kt`
+설명
 
-```kotlin
-// 테스트를 통과하는 최소 구현
-```
+### Step 3: Domain Layer
 
-**Refactoring:** 필요시 리팩토링
-
-### Step 2: Application Layer - Application Service
-
-**Red:** `src/test/kotlin/...ServiceTest.kt`
-
-```kotlin
-// 실패하는 테스트
-```
-
-**Green:** `src/main/kotlin/...Service.kt`
-
-```kotlin
-// 테스트를 통과하는 최소 구현
-```
-
-**Refactoring:** 필요시 리팩토링
-
-### Step 3: Domain Layer - Entity/Event
-
-**Red:** `src/test/kotlin/...Test.kt`
-
-```kotlin
-// 실패하는 테스트
-```
-
-**Green:** `src/main/kotlin/...`
-
-```kotlin
-// 테스트를 통과하는 최소 구현
-```
-
-**Refactoring:** 필요시 리팩토링
+설명
 
 ## Verification
-
-<!-- 컴파일, 테스트, 수동 테스트 방법을 명시합니다. -->
 
 ### Build
 
 ```bash
-./gradlew compileKotlin
+# 빌드 명령어
 ```
 
 ### Test
 
 ```bash
-./gradlew test
+# 테스트 명령어
 ```
 
 ### Manual Test
@@ -139,8 +100,6 @@ Entity (기존)
 2. 에러 케이스 테스트
 
 ## Considerations
-
-<!-- 구현 시 고려해야 할 사항들을 명시합니다. -->
 
 ### 기존 코드 재사용
 

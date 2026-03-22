@@ -8,7 +8,7 @@
 
 <!-- 작업 날짜 기준으로 세션 구분. -->
 
-### Phase 1: Requirements & Discovery ✅
+### Phase 1: Planning & Verification ✅
 
 <!-- Phase별 수행 작업 상세 기록. -->
 
@@ -19,10 +19,10 @@
 
 **생성/수정 파일**:
 
-- `path/to/file.kt` (새로 생성)
-- `path/to/other.kt` (수정)
+- `path/to/file` (새로 생성)
+- `path/to/other` (수정)
 
-### Phase 2: Planning & Structure 🔄
+### Phase 2: Generate Planning Files 🔄
 
 **작업 내역**:
 
@@ -31,19 +31,27 @@
 
 **생성/수정 파일**:
 
-- `path/to/file.kt` (수정)
+- `path/to/file` (수정)
 
-### Phase 3: Implementation ⏸️
+### Phase 3: ATDD 인수 테스트 작성 ⏸️
 
 아직 시작 안 함
 
-### Phase 4: Testing ⏸️
+### Phase 4: Implementation ⏸️
+
+아직 시작 안 함
+
+### Phase 5: Multi-perspective Review ⏸️
+
+아직 시작 안 함
+
+### Phase 6: Final Gate & Delivery ⏸️
 
 아직 시작 안 함
 
 ## Test Results
 
-<!-- 테스트 실행 결과. Phase 4에서 업데이트. -->
+<!-- 테스트 실행 결과. Phase 3(ATDD) 및 Phase 4(구현)에서 업데이트. -->
 
 | Test             | Input          | Expected     | Actual      | Status |
 | ---------------- | -------------- | ------------ | ----------- | ------ |
@@ -53,7 +61,7 @@
 
 ## Review Log
 
-<!-- Phase 4 다층 검토 결과를 기록합니다. -->
+<!-- Phase 5 다층 검토 결과를 기록합니다. -->
 
 | 검토 단계 | 관점 | 결과 | 발견된 문제 |
 |-----------|------|------|-------------|
